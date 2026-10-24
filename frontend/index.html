@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Assistance informatique</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E5E58'/%3E%3Cpath d='M9 10h14v9h-7l-4 4v-4H9z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/bricolage-grotesque-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-mark" viewBox="0 0 36 36"><rect x="1" y="1" width="34" height="34" rx="10" fill="currentColor"/><path d="M10 11.5h16v10.5h-8.2L13 26.4V22h-3z" fill="#fff"/><circle cx="14.5" cy="16.8" r="1.4" fill="currentColor"/><circle cx="18" cy="16.8" r="1.4" fill="currentColor"/><circle cx="21.5" cy="16.8" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="M20.5 11.5 12.4 19.6a5 5 0 0 1-7.1-7.1l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4l7.8-7.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12h13M12 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M10.3 3.2h3.4l.5 2.4 1.6.9 2.3-.8 1.7 2.9-1.8 1.6v1.8l1.8 1.6-1.7 2.9-2.3-.8-1.6.9-.5 2.4h-3.4l-.5-2.4-1.6-.9-2.3.8-1.7-2.9L6 12.8v-1.8L4.2 9.4l1.7-2.9 2.3.8 1.6-.9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Accueil de l’assistance">
+      <span class="brand-mark" id="brandMark"><svg width="36" height="36"><use href="#i-mark"/></svg></span>
+      <span class="brand-text"><span class="brand-name" id="appName">Assistance informatique</span><span class="brand-company" id="company"></span></span>
+    </a>
+    <span class="topbar-spacer"></span>
+    <a class="icon-btn" id="adminLink" href="/admin" title="Administration" aria-label="Administration" hidden><svg><use href="#i-gear"/></svg></a>
+    <div class="user-chip" id="userChip" hidden><span class="avatar" id="avatar"></span><span class="name" id="userName"></span></div>
+  </header>
+
+  <main class="workspace">
+    <section class="conversation" aria-label="Conversation avec l’assistant">
+      <ol class="steps" id="steps" aria-label="Étapes">
+        <li aria-current="step" data-step="describe"><span class="dot" aria-hidden="true"></span><span class="txt">Décrire</span></li>
+        <li data-step="clarify"><span class="dot" aria-hidden="true"></span><span class="txt">Préciser</span></li>
+        <li data-step="review"><span class="dot" aria-hidden="true"></span><span class="txt">Vérifier et envoyer</span></li>
+      </ol>
+
+      <button class="slip-peek" id="slipPeek" type="button" aria-controls="slipCol" hidden>
+        <span><strong>Votre ticket</strong> <span id="peekText">en cours de rédaction</span></span>
+        <span class="tag">Voir</span>
+      </button>
+
+      <div class="notice" id="notice" role="status" hidden></div>
+
+      <div class="thread" id="thread" aria-live="polite">
+        <div class="welcome" id="welcome">
+          <h1><span id="wTitle">Bonjour,</span><span class="l2" id="wSub">qu’est-ce qui vous embête ?</span></h1>
+          <p id="wText"></p>
+          <ul class="topics" id="topics"></ul>
+        </div>
+      </div>
+
+      <div class="composer-wrap">
+        <form class="composer" id="composer" autocomplete="off">
+          <div class="tray" id="tray" aria-label="Pièces jointes"></div>
+          <div class="composer-row">
+            <label for="input" class="sr-only">Votre message</label>
+            <textarea id="input" rows="1" placeholder="Par exemple : « Mon imprimante affiche une erreur depuis ce matin »"></textarea>
+            <input type="file" id="fileInput" multiple hidden>
+            <button class="icon-btn" type="button" id="attachBtn" title="Joindre un fichier ou une capture" aria-label="Joindre un fichier"><svg><use href="#i-clip"/></svg></button>
+            <button class="send-btn" type="submit" id="sendBtn" aria-label="Envoyer" disabled><svg><use href="#i-send"/></svg></button>
+          </div>
+        </form>
+        <div class="composer-hint">
+          <span class="tip">Une capture d’écran aide beaucoup : <kbd>Windows</kbd> + <kbd>Maj</kbd> + <kbd>S</kbd>, puis <kbd>Ctrl</kbd> + <kbd>V</kbd> ici.</span>
+          <span><kbd>Entrée</kbd> pour envoyer</span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="slip-col" id="slipCol" aria-label="Votre ticket">
+      <article class="slip" id="slip" data-phase="describe">
+        <header class="slip-head">
+          <h2>Votre ticket</h2>
+          <span class="slip-no" id="slipNo">N° à venir</span>
+          <button class="icon-btn sheet-close" type="button" id="sheetClose" aria-label="Fermer"><svg><use href="#i-x"/></svg></button>
+        </header>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="slip-body" id="slipBody"></div>
+      </article>
+    </aside>
+  </main>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <script src="/assets/js/app.js" defer></script>
+</body>
+</html>

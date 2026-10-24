@@ -1,0 +1,33 @@
+services:
+  assistant:
+    build: .
+    image: glpi-assistant:1.0
+    container_name: glpi-assistant
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./data:/data                                  # config.json + clé de session
+      - ./deploy/krb5.conf:/etc/krb5.conf:ro
+      - ./secrets/http.keytab:/etc/krb5/http.keytab:ro
+      - ./certs/ca.pem:/certs/ca.pem:ro               # racine AD CS (GLPI et LLM en HTTPS interne)
+    # Sans le proxy Caddy ci-dessous, exposez directement : "8080:8080"
+    expose:
+      - "8080"
+
+  # Terminaison TLS avec le certificat émis par votre PKI AD CS.
+  # Lancer avec : docker compose --profile proxy up -d
+  caddy:
+    image: caddy:2
+    profiles: ["proxy"]
+    restart: unless-stopped
+    depends_on: [assistant]
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certs:/certs:ro
+      - caddy_data:/data
+
+volumes:
+  caddy_data:

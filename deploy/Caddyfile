@@ -1,0 +1,18 @@
+# Remplacez le nom d'hôte et les chemins de certificat.
+# Le nom doit correspondre au SPN HTTP/<nom> déclaré dans l'AD (enregistrement DNS de type A).
+assistance.local.lan {
+	tls /certs/assistance.local.lan.crt /certs/assistance.local.lan.key
+
+	request_body {
+		max_size 100MB
+	}
+
+	# L'en-tête Authorization (Negotiate) est transmis tel quel à l'application.
+	reverse_proxy assistant:8080 {
+		header_up X-Forwarded-Proto {scheme}
+	}
+}
+
+http://assistance.local.lan {
+	redir https://{host}{uri} permanent
+}

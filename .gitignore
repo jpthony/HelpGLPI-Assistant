@@ -1,0 +1,47 @@
+# Environnement / secrets
+.env
+.env.*
+!.env.example
+secrets/
+certs/
+keys/
+*.key
+*.pem
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# Données locales
+/data/
+data/
+*.sqlite3
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Éditeur / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs / temporaires
+*.log
+*.tmp
+*.bak
+
+# Docker
+/docker-compose.override.yml

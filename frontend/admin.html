@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Administration — Assistance informatique</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E5E58'/%3E%3Cpath d='M9 10h14v9h-7l-4 4v-4H9z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body class="admin">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-mark" viewBox="0 0 36 36"><rect x="1" y="1" width="34" height="34" rx="10" fill="currentColor"/><path d="M10 11.5h16v10.5h-8.2L13 26.4V22h-3z" fill="#fff"/><circle cx="14.5" cy="16.8" r="1.4" fill="currentColor"/><circle cx="18" cy="16.8" r="1.4" fill="currentColor"/><circle cx="21.5" cy="16.8" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Retour à l’assistant">
+      <span class="brand-mark"><svg width="36" height="36"><use href="#i-mark"/></svg></span>
+      <span class="brand-text"><span class="brand-name">Administration</span><span class="brand-company" id="adminSub">Assistant de saisie GLPI</span></span>
+    </a>
+    <span class="topbar-spacer"></span>
+    <a class="btn btn-ghost" href="/">Ouvrir l’assistant</a>
+  </header>
+
+  <div class="admin-layout">
+    <nav class="admin-nav" aria-label="Sections de configuration">
+      <ul id="nav"></ul>
+    </nav>
+    <main class="admin-main" id="main" tabindex="-1">
+      <p class="loading">Chargement de la configuration…</p>
+    </main>
+  </div>
+
+  <div class="savebar" id="savebar" hidden role="region" aria-label="Enregistrement">
+    <span id="saveMsg">Modifications non enregistrées</span>
+    <span class="topbar-spacer"></span>
+    <button class="btn btn-ghost" type="button" id="discardBtn">Annuler les modifications</button>
+    <button class="btn btn-primary" type="button" id="saveBtn">Enregistrer</button>
+  </div>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="/assets/js/admin.js" defer></script>
+</body>
+</html>
