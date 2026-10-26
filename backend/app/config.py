@@ -74,7 +74,7 @@ DEFAULTS: dict[str, Any] = {
         # kerberos | proxy_header | dev
         "mode": "kerberos",
         # Laisser vide pour accepter n’importe quel principal présent dans le keytab.
-        # Sinon, forme "HTTP@assistance.local.lan".
+        # Sinon, forme "HTTP@help.local.lan".
         "service_principal": "",
         "strip_realm": True,
         "lowercase": True,

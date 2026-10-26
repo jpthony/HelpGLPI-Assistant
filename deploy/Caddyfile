@@ -1,7 +1,7 @@
 # Remplacez le nom d'hôte et les chemins de certificat.
 # Le nom doit correspondre au SPN HTTP/<nom> déclaré dans l'AD (enregistrement DNS de type A).
-assistance.local.lan {
-	tls /certs/assistance.local.lan.crt /certs/assistance.local.lan.key
+help.local.lan {
+	tls /certs/help.local.lan.crt /certs/help.local.lan.key
 
 	request_body {
 		max_size 100MB
@@ -13,6 +13,6 @@ assistance.local.lan {
 	}
 }
 
-http://assistance.local.lan {
+http://help.local.lan {
 	redir https://{host}{uri} permanent
 }

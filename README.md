@@ -7,7 +7,7 @@ Une page web qui aide les utilisateurs peu à l'aise à signaler un problème. I
 - **IA** : modèle local, API compatible OpenAI (vLLM, llama.cpp, LM Studio, Ollama `/v1`) ou API native d'Ollama.
 - **Administration** : `/admin`, tout se règle et se teste depuis le navigateur.
 
-Dans ce guide, l'outil s'appelle `assistance.local.lan`. Remplacez ce nom partout s'il est différent : il doit être identique dans le DNS, le SPN, le certificat et le Caddyfile.
+Dans ce guide, l'outil s'appelle `help.local.lan`. Remplacez ce nom partout s'il est différent : il doit être identique dans le DNS, le SPN, le certificat et le Caddyfile.
 
 ## Contenu
 
@@ -83,7 +83,7 @@ Si le modèle est indisponible, l'utilisateur peut quand même remplir et envoye
 
 ### DNS
 
-Créez un enregistrement **A** (pas un CNAME) `assistance.local.lan` vers le serveur. Les navigateurs construisent le SPN à partir du nom canonique : un CNAME ou une adresse IP fait échouer Kerberos (repli NTLM).
+Créez un enregistrement **A** (pas un CNAME) `help.local.lan` vers le serveur. Les navigateurs construisent le SPN à partir du nom canonique : un CNAME ou une adresse IP fait échouer Kerberos (repli NTLM).
 
 ### Compte de service AD et keytab
 
@@ -94,10 +94,10 @@ New-ADUser -Name "svc-assistance-http" -SamAccountName svc-assistance-http `
   -AccountPassword (Read-Host -AsSecureString "Mot de passe") -Enabled $true `
   -PasswordNeverExpires $true -KerberosEncryptionType AES256
 
-ktpass -princ HTTP/assistance.local.lan@LOCAL.LAN -mapuser LOCAL\svc-assistance-http `
+ktpass -princ HTTP/help.local.lan@LOCAL.LAN -mapuser LOCAL\svc-assistance-http `
   -pass * -crypto AES256-SHA1 -ptype KRB5_NT_PRINCIPAL -out http.keytab
 
-setspn -Q HTTP/assistance.local.lan    # doit renvoyer UN seul compte
+setspn -Q HTTP/help.local.lan    # doit renvoyer UN seul compte
 ```
 
 Copiez `http.keytab` dans `secrets/`, puis :
@@ -116,8 +116,8 @@ docker exec glpi-assistant klist -k /etc/krb5/http.keytab
 
 ### Navigateurs (GPO)
 
-- **Edge et Chrome** : stratégie `AuthServerAllowlist` = `assistance.local.lan` (ou `*.local.lan`).
-- **Firefox** : `network.negotiate-auth.trusted-uris` = `assistance.local.lan`.
+- **Edge et Chrome** : stratégie `AuthServerAllowlist` = `help.local.lan` (ou `*.local.lan`).
+- **Firefox** : `network.negotiate-auth.trusted-uris` = `help.local.lan`.
 
 Puis, dans `.env`, `AUTH_MODE=kerberos` et `docker compose up -d`.
 
@@ -138,10 +138,10 @@ Si un Apache avec `mod_auth_gssapi` existe déjà, choisissez « En-tête transm
 
 ## 5. HTTPS avec Caddy
 
-Émettez un certificat pour `assistance.local.lan` depuis votre PKI AD CS et placez-le dans `certs/` :
+Émettez un certificat pour `help.local.lan` depuis votre PKI AD CS et placez-le dans `certs/` :
 
-- `certs/assistance.local.lan.crt` (avec la chaîne intermédiaire)
-- `certs/assistance.local.lan.key`
+- `certs/help.local.lan.crt` (avec la chaîne intermédiaire)
+- `certs/help.local.lan.key`
 
 Puis :
 

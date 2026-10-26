@@ -151,7 +151,7 @@
         { title: "Connexion", fields: [
           { path: "auth.mode", label: "Méthode", type: "select", options: [
             ["kerberos", "Kerberos / SPNEGO (SSO Windows)"], ["proxy_header", "En-tête transmis par un reverse proxy"], ["dev", "Développement (utilisateur fixe)"]] },
-          { path: "auth.service_principal", label: "Principal de service", type: "text", placeholder: "HTTP@assistance.local.lan",
+          { path: "auth.service_principal", label: "Principal de service", type: "text", placeholder: "HTTP@help.local.lan",
             show: (c) => c.auth.mode === "kerberos", help: "Vide : toute clé du keytab est acceptée." },
           { path: "auth.proxy_header", label: "Nom de l’en-tête", type: "text", show: (c) => c.auth.mode === "proxy_header" },
           { path: "auth.dev_user", label: "Utilisateur simulé", type: "text", show: (c) => c.auth.mode === "dev" },
