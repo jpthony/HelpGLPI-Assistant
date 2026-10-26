@@ -13,6 +13,8 @@ services:
     # Sans le proxy Caddy ci-dessous, exposez directement : "8080:8080"
     expose:
       - "8080"
+    ports:
+      - "8089:8080"
 
   # Terminaison TLS avec le certificat émis par votre PKI AD CS.
   # Lancer avec : docker compose --profile proxy up -d
