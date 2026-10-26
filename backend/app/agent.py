@@ -262,8 +262,11 @@ async def run_turn(*, description: str, exchanges: list[dict], attachments: list
                      {"role": "user", "content": "Ta réponse n’était pas un JSON valide. Renvoie uniquement l’objet JSON demandé."}]
         try:
             raw = extract_json(await chat(messages))
-        except (ValueError, json.JSONDecodeError):
-            raw = {"status": "ready", "message": "", "ticket": {}}
+        except (ValueError, json.JSONDecodeError) as exc:
+            raise LLMError(
+                "Le modèle n’a pas renvoyé de JSON valide après une relance. "
+                "Vérifiez le modèle et son respect des consignes JSON."
+            ) from exc
 
     return normalize(raw, allowed_ids=allowed, max_questions=max_q, force_ready=force_ready,
                      description=description)
