@@ -26,7 +26,7 @@ Pour voir l'interface et régler GLPI et le modèle avant de s'occuper du SSO :
 ```bash
 cp .env.example .env
 # dans .env : AUTH_MODE=dev et DEV_USER=votre_login, ADMIN_USERS=votre_login
-mkdir -p data secrets certs && touch secrets/http.keytab
+mkdir -p data secrets certs && touch secrets/help.keytab
 cp /chemin/vers/racine-adcs.pem certs/ca.pem     # ou un fichier vide si tout est en HTTP
 sudo chown -R 10001 data
 docker compose up -d --build
@@ -95,15 +95,15 @@ New-ADUser -Name "svc-assistance-http" -SamAccountName svc-assistance-http `
   -PasswordNeverExpires $true -KerberosEncryptionType AES256
 
 ktpass -princ HTTP/help.local.lan@LOCAL.LAN -mapuser LOCAL\svc-assistance-http `
-  -pass * -crypto AES256-SHA1 -ptype KRB5_NT_PRINCIPAL -out http.keytab
+  -pass * -crypto AES256-SHA1 -ptype KRB5_NT_PRINCIPAL -out help.keytab
 
 setspn -Q HTTP/help.local.lan    # doit renvoyer UN seul compte
 ```
 
-Copiez `http.keytab` dans `secrets/`, puis :
+Copiez `help.keytab` dans `secrets/`, puis :
 
 ```bash
-sudo chown 10001 secrets/http.keytab && sudo chmod 400 secrets/http.keytab
+sudo chown 10001 secrets/help.keytab && sudo chmod 400 secrets/help.keytab
 ```
 
 Adaptez `deploy/krb5.conf` si le royaume n'est pas `LOCAL.LAN`. L'application ne fait que **valider** les tickets : elle ne contacte pas le KDC et ne stocke aucun mot de passe.
