@@ -115,6 +115,8 @@ DEFAULTS: dict[str, Any] = {
         "model": "",
         "temperature": 0.2,
         "max_tokens": 1500,
+        # "" : défaut du modèle | none | low | medium | high
+        "reasoning_effort": "",
         "timeout": 90,
         "json_mode": True,
         "verify_tls": True,

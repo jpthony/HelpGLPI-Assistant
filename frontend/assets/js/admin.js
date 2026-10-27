@@ -90,6 +90,9 @@
         { title: "Génération", fields: [
           { path: "llm.temperature", label: "Température", type: "range", min: 0, max: 1, step: 0.05, help: "Bas = réponses régulières. 0,1 à 0,3 convient bien." },
           { path: "llm.max_tokens", label: "Longueur maximale de réponse (jetons)", type: "number", min: 200, max: 8000 },
+          { path: "llm.reasoning_effort", label: "Raisonnement", type: "select", options: [
+            ["", "Par défaut du modèle"], ["none", "Désactivé (plus rapide)"], ["low", "Faible"], ["medium", "Moyen"], ["high", "Élevé"]],
+            help: "Pour les modèles qui « réfléchissent » (Qwen3, gpt-oss…). Envoie <code>reasoning_effort</code> (Ollama natif : <code>think</code>)." },
           { path: "llm.timeout", label: "Délai d’attente (secondes)", type: "number", min: 10, max: 600 },
           { path: "llm.json_mode", label: "Forcer une réponse JSON", type: "toggle", help: "Désactivez si votre serveur refuse <code>response_format</code> / <code>format</code>." },
         ] },

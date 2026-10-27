@@ -69,6 +69,7 @@ async def chat(messages: list[dict], *, json_mode: bool | None = None, cfg: dict
     if not cfg.get("model"):
         raise LLMError("Aucun modèle n’est configuré (Administration > Modèle IA).")
     jm = cfg.get("json_mode", True) if json_mode is None else json_mode
+    effort = cfg.get("reasoning_effort") or ""
     base = cfg["base_url"].rstrip("/")
     headers = {"Content-Type": "application/json"}
     if cfg.get("api_key"):
@@ -82,6 +83,8 @@ async def chat(messages: list[dict], *, json_mode: bool | None = None, cfg: dict
                                 "num_predict": int(cfg.get("max_tokens", 1500))}}
                 if jm:
                     body["format"] = "json"
+                if effort:
+                    body["think"] = False if effort == "none" else effort
                 r = await client.post(f"{base}/api/chat", json=body, headers=headers)
                 if r.status_code != 200:
                     raise LLMError(f"Ollama a répondu HTTP {r.status_code} : {r.text[:300]}")
@@ -92,6 +95,8 @@ async def chat(messages: list[dict], *, json_mode: bool | None = None, cfg: dict
                     "max_tokens": int(cfg.get("max_tokens", 1500))}
             if jm:
                 body["response_format"] = {"type": "json_object"}
+            if effort:
+                body["reasoning_effort"] = effort
             r = await client.post(f"{base}/chat/completions", json=body, headers=headers)
             if r.status_code == 400 and jm:  # serveur qui ne gère pas response_format
                 body.pop("response_format", None)
