@@ -262,6 +262,10 @@ body::before {
 .send-btn:disabled { background: var(--line); color: var(--ink-3); cursor: not-allowed; }
 .send-btn svg { width: 22px; height: 22px; }
 .composer-hint { display: flex; justify-content: space-between; gap: 12px; padding: 6px 6px 0; font-size: .8125rem; color: var(--ink-3); }
+.about-btn { width: 32px; height: 32px; color: var(--ink-3); }
+.about-btn svg { width: 18px; height: 18px; }
+.about { inset: auto; top: calc(var(--topbar-h) + env(safe-area-inset-top, 0px) + 6px); right: clamp(16px, 3vw, 32px); margin: 0;
+  padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--paper); color: var(--ink-2); font-size: .8125rem; }
 kbd { font: inherit; font-size: .75rem; padding: 1px 6px; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 5px; background: var(--surface); color: var(--ink-2); }
 
 .tray { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0 4px; }
