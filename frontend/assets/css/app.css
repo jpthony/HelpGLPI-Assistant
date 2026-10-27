@@ -363,15 +363,31 @@ kbd { font: inherit; font-size: .75rem; padding: 1px 6px; border: 1px solid var(
 .slip-row > .field { flex: 1 1 140px; }
 
 /* Tampon « envoyé » : le seul moment orchestré */
-.stamp {
+.stamp, .egg-stamp {
   position: absolute; right: 18px; top: 58px; z-index: 2; pointer-events: none;
   border: 3px solid var(--ok); color: var(--ok); border-radius: 10px; padding: 6px 14px 4px;
   font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; line-height: 1; text-align: center;
   transform: rotate(-9deg); background: color-mix(in srgb, var(--paper) 85%, transparent);
   animation: stamp .55s cubic-bezier(.2, 1.6, .4, 1) both;
 }
-.stamp small { display: block; font-family: var(--font-body); font-weight: 700; font-size: .6875rem; margin-top: 4px; }
 @keyframes stamp { 0% { opacity: 0; transform: rotate(-9deg) scale(1.8); } 100% { opacity: 1; transform: rotate(-9deg) scale(1); } }
+.stamp small, .egg-stamp small { display: block; font-family: var(--font-body); font-weight: 700; font-size: .6875rem; margin-top: 4px; }
+.egg-stamp {
+  right: auto; left: 22px; top: 96px; z-index: 4;
+  --egg: color-mix(in srgb, var(--mimosa) 70%, var(--ink)); border-color: var(--egg); color: var(--egg);
+  transform: rotate(7deg); animation-name: egg-stamp;
+}
+@keyframes egg-stamp { 0% { opacity: 0; transform: rotate(7deg) scale(1.8); } 100% { opacity: 1; transform: rotate(7deg) scale(1); } }
+
+/* Easter egg : faux écran bleu */
+.bsod {
+  position: fixed; inset: 0; z-index: 100; overflow: auto; cursor: pointer;
+  padding: 12vh clamp(20px, 10vw, 160px); background: #0078D7; color: #fff;
+  font: 400 clamp(1.05rem, 2.2vw, 1.5rem)/1.4 "Segoe UI", system-ui, sans-serif;
+}
+.bsod p { max-width: 42ch; margin: 0 0 1em; }
+.bsod .face { font-size: clamp(5rem, 14vw, 9rem); line-height: 1; margin-bottom: .25em; }
+.bsod small { display: block; margin-top: 2.5em; font-size: .7em; opacity: .85; }
 
 .sent-panel { display: grid; gap: 10px; text-align: left; padding-bottom: 18px; border-bottom: 1px solid var(--line); padding-right: 110px; }
 .sent-panel .slip-actions { margin-right: -110px; }

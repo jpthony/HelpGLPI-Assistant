@@ -515,5 +515,57 @@
       : S.phase === "review" ? "prêt à vérifier" : `${n} informations notées`;
   }
 
+  // Konami code (ou 7 touches sur « ? ») : faux écran bleu puis tampon. Purement visuel.
+  let eggOn = false;
+  function easterEgg() {
+    if (eggOn) return;
+    eggOn = true;
+    const pct = el("span", { text: "0" });
+    const msg = el("p", {}, "Votre PC a rencontré un problème et doit redémarrer. Nous collectons simplement des informations relatives aux erreurs, puis nous allons redémarrer pour vous.");
+    const bsod = el("div", { class: "bsod", role: "alert" }, el("p", { class: "face", text: ":(" }), msg,
+      el("p", {}, pct, " % effectués"), el("small", { text: "Code d’arrêt : KONAMI_CODE_DETECTED" }));
+    document.body.append(bsod);
+    let n = 0, done = false;
+    const end = () => {
+      if (done) return;
+      done = true;
+      clearInterval(tick);
+      document.removeEventListener("keydown", onEsc);
+      bsod.remove();
+      if (mobile()) openSheet();
+      slip.querySelector(".egg-stamp")?.remove();
+      const st = el("div", { class: "egg-stamp", "aria-hidden": "true" }, "Légendaire", el("small", { text: "+30 vies" }));
+      slip.append(st);
+      setTimeout(() => { st.remove(); eggOn = false; }, 6000);
+    };
+    const onEsc = (e) => { if (e.key === "Escape") end(); };
+    const tick = setInterval(() => {
+      n = Math.min(100, n + 4 + Math.floor(Math.random() * 18));
+      pct.textContent = n;
+      if (n === 100) {
+        clearInterval(tick);
+        msg.textContent = "Avez-vous essayé de l’éteindre et de le rallumer ?";
+        setTimeout(end, 2200);
+      }
+    }, 350);
+    bsod.addEventListener("click", end);
+    document.addEventListener("keydown", onEsc);
+  }
+
+  const KONAMI = "arrowup arrowup arrowdown arrowdown arrowleft arrowright arrowleft arrowright b a";
+  let keys = [];
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest?.("input, textarea, select, [contenteditable]")) return;
+    keys = [...keys, e.key.toLowerCase()].slice(-10);
+    if (keys.join(" ") === KONAMI) { keys = []; easterEgg(); }
+  });
+  let taps = 0, lastTap = 0;
+  $(".about-btn")?.addEventListener("click", () => {
+    const now = Date.now();
+    taps = now - lastTap < 1500 ? taps + 1 : 1;
+    lastTap = now;
+    if (taps === 7) { taps = 0; $("#about").hidePopover?.(); easterEgg(); }
+  });
+
   init();
 })();
