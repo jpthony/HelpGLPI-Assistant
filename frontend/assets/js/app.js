@@ -515,7 +515,7 @@
       : S.phase === "review" ? "prêt à vérifier" : `${n} informations notées`;
   }
 
-  // Konami code (ou 7 touches sur « ? ») : faux écran bleu puis tampon. Purement visuel.
+  // Konami code (ou 7 touches sur « ? ») : faux écran bleu puis tampon jusqu’au rechargement. Purement visuel.
   let eggOn = false;
   function easterEgg() {
     if (eggOn) return;
@@ -534,9 +534,9 @@
       bsod.remove();
       if (mobile()) openSheet();
       slip.querySelector(".egg-stamp")?.remove();
-      const st = el("div", { class: "egg-stamp", "aria-hidden": "true" }, "Légendaire", el("small", { text: "+30 vies" }));
+      const st = el("div", { class: "egg-stamp", "aria-hidden": "true" }, "Ticket légendaire", el("small", { text: "Approved by IT" }));
       slip.append(st);
-      setTimeout(() => { st.remove(); eggOn = false; }, 6000);
+      eggOn = false;
     };
     const onEsc = (e) => { if (e.key === "Escape") end(); };
     const tick = setInterval(() => {

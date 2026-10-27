@@ -373,7 +373,7 @@ kbd { font: inherit; font-size: .75rem; padding: 1px 6px; border: 1px solid var(
 @keyframes stamp { 0% { opacity: 0; transform: rotate(-9deg) scale(1.8); } 100% { opacity: 1; transform: rotate(-9deg) scale(1); } }
 .stamp small, .egg-stamp small { display: block; font-family: var(--font-body); font-weight: 700; font-size: .6875rem; margin-top: 4px; }
 .egg-stamp {
-  right: auto; left: 22px; top: 96px; z-index: 4;
+  right: auto; left: 14px; top: 8px; z-index: 4; background: none;
   --egg: color-mix(in srgb, var(--mimosa) 70%, var(--ink)); border-color: var(--egg); color: var(--egg);
   transform: rotate(7deg); animation-name: egg-stamp;
 }
