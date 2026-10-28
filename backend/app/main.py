@@ -47,6 +47,9 @@ async def csrf_and_headers(request: Request, call_next):
     resp.headers.setdefault("X-Content-Type-Options", "nosniff")
     resp.headers.setdefault("Referrer-Policy", "same-origin")
     resp.headers.setdefault("X-Frame-Options", "DENY")
+    # Revalidation à chaque chargement (304 si inchangé) : pas de CSS/JS périmé après une mise à jour.
+    if request.url.path.startswith("/assets/"):
+        resp.headers.setdefault("Cache-Control", "no-cache")
     return resp
 
 
