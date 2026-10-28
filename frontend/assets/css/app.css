@@ -264,8 +264,27 @@ body::before {
 .composer-hint { display: flex; justify-content: space-between; gap: 12px; padding: 6px 6px 0; font-size: .8125rem; color: var(--ink-3); }
 .about-btn { width: 32px; height: 32px; color: var(--ink-3); }
 .about-btn svg { width: 18px; height: 18px; }
-.about { inset: auto; top: calc(var(--topbar-h) + env(safe-area-inset-top, 0px) + 6px); right: clamp(16px, 3vw, 32px); margin: 0;
-  padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--paper); color: var(--ink-2); font-size: .8125rem; }
+/* « À propos » : un talon de ticket, même papier que la fiche. */
+.about {
+  inset: auto; top: calc(var(--topbar-h) + env(safe-area-inset-top, 0px) + 8px); right: clamp(16px, 3vw, 32px); margin: 0;
+  width: max-content; max-width: calc(100vw - 32px); padding: 16px 18px 18px; overflow: visible;
+  border: 0; border-top: 4px solid var(--accent); border-radius: 6px; background: var(--paper); color: var(--ink-2);
+  box-shadow: var(--shadow-slip); font-size: .875rem;
+  opacity: 1; translate: 0; transition: opacity .15s, translate .15s, display .15s allow-discrete, overlay .15s allow-discrete;
+}
+@starting-style { .about:popover-open { opacity: 0; translate: 0 -4px; } }
+.about p { margin: 0; }
+.about-by { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: var(--ink); }
+.about .about-keys { display: flex; gap: 3px; margin-top: 8px; }
+.about-keys kbd { min-width: 1.6em; text-align: center; padding: 1px 4px; color: var(--ink-3); }
+.about .perf { margin: 16px 0; }
+.about-tip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.about-tip span { font-style: italic; color: var(--ink-3); }
+.bmc {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 32px; padding: 0 12px 0 10px; border-radius: 8px;
+  background: #FFDD00; color: #0D0C22; font-weight: 700; text-decoration: none;
+}
+.bmc:hover { background: #F5D300; }
 kbd { font: inherit; font-size: .75rem; padding: 1px 6px; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 5px; background: var(--surface); color: var(--ink-2); }
 
 .tray { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0 4px; }

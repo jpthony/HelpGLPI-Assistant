@@ -116,8 +116,13 @@ docker exec glpi-assistant klist -k /etc/krb5/http.keytab
 
 ### Navigateurs (GPO)
 
-- **Edge et Chrome** : stratégie `AuthServerAllowlist` = `help.local.lan` (ou `*.local.lan`).
-- **Firefox** : `network.negotiate-auth.trusted-uris` = `help.local.lan`.
+Sans ces stratégies, le navigateur n'envoie pas l'identité Windows de lui-même : il affiche une fenêtre de connexion (qui ne fonctionne qu'avec `login@local.lan`). Déclarez le nom complet **et** le nom court si les utilisateurs tapent `help/`.
+
+- **Edge et Chrome** (couvre les deux) : *Configuration ordinateur > Modèles d'administration > Composants Windows > Internet Explorer > Panneau de configuration Internet > Page Sécurité > Liste des attributions de sites aux zones* : `help` = `1` et `help.local.lan` = `1` (zone Intranet local, connexion automatique par défaut).
+- **Ou** la stratégie dédiée de chaque navigateur (modèles ADMX Edge et Chrome) : `AuthServerAllowlist` = `help,help.local.lan` (ou `help,*.local.lan`).
+- **Firefox** : `network.negotiate-auth.trusted-uris` = `help,.local.lan` (ou `policies.json` : `"Authentication": { "SPNEGO": ["help", ".local.lan"] }`).
+
+Vérification sur un poste : `gpupdate /force`, fermer complètement le navigateur, contrôler `edge://policy`, puis ouvrir `help/` : aucune fenêtre ne doit apparaître.
 
 Puis, dans `.env`, `AUTH_MODE=kerberos` et `docker compose up -d`.
 
@@ -125,6 +130,7 @@ Puis, dans `.env`, `AUTH_MODE=kerberos` et `docker compose up -d`.
 
 | Symptôme | Cause probable |
 |---|---|
+| Le navigateur demande identifiant et mot de passe (ça passe avec `login@local.lan`) | Site non déclaré en zone Intranet ni dans `AuthServerAllowlist` (voir GPO ci-dessus) |
 | Page « Connexion automatique impossible », aucun jeton reçu | Site absent de `AuthServerAllowlist`, poste hors domaine, ou accès par IP |
 | Message « méthode non prise en charge » (jeton NTLM) | SPN absent ou en double, CNAME, ou accès par IP |
 | « Connexion refusée » avec erreur de déchiffrement | Keytab périmé (mot de passe du compte changé), mauvais kvno, chiffrement AES non activé |
@@ -232,3 +238,7 @@ Dans `/admin` :
 - **Fichiers** : les pièces jointes sont filtrées par extension et par taille.
 - **Questions de l'agent** : l'agent a pour consigne de ne jamais demander de mot de passe.
 - **Conteneur** : il tourne avec un utilisateur non root.
+
+## Soutien
+
+L'outil vous rend service ? [☕ Offrez-moi un café](https://buymeacoffee.com/jpthony).
