@@ -241,4 +241,6 @@ Dans `/admin` :
 
 ## Soutien
 
-L'outil vous rend service ? [☕ Offrez-moi un café](https://buymeacoffee.com/jpthony).
+L'outil vous rend service ?
+
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174">](https://buymeacoffee.com/jpthony)
