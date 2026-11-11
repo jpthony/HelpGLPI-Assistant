@@ -7,6 +7,8 @@ Une page web qui aide les utilisateurs peu à l'aise à signaler un problème. I
 - **IA** : modèle local, API compatible OpenAI (vLLM, llama.cpp, LM Studio, Ollama `/v1`) ou API native d'Ollama.
 - **Administration** : `/admin`, tout se règle et se teste depuis le navigateur.
 
+![Capture d'écran de l'assistant](docs/screenshot.jpg)
+
 ## Contenu
 
 ```
